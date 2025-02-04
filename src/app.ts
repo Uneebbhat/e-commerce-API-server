@@ -5,6 +5,8 @@ import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 import dbConnect from "./config/dbConnect";
 import ErrorHandler from "./utils/ErrorHandler";
+import userRoutes from "./routes/user/userRoutes.routes";
+import productRoutes from "./routes/product/productRoutes.routes";
 
 const app: Application = express();
 
@@ -18,6 +20,7 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
   message: "Too many requests from this IP, please try again later.",
+  statusCode: 429,
 });
 app.use(limiter);
 
@@ -36,7 +39,7 @@ app.use(
 // Routes
 
 // TODO: Change apiRoutes with actual routes
-// app.use("/api", apiRoutes);
+app.use("/api", userRoutes, productRoutes);
 
 app.use("*", (req: Request, res: Response) => {
   ErrorHandler.send(res, 404, "Page not found");

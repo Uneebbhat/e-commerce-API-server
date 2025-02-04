@@ -16,7 +16,7 @@ const sendEmail = async (
   });
 
   const info = await transporter.sendMail({
-    from: '"App name" <no-reply@appname.com>',
+    from: '"E-commerce" <no-reply@e-commerce.com>',
     to: email,
     subject,
     text,
